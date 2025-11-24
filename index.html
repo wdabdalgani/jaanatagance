@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Jannat Systems" />
+  <meta name="theme-color" content="#f2f2f7" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0" />
+  <title>Jannat Systems</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    /* iOS System Variables */
+    :root {
+      /* Light Mode Colors - iOS System */
+      --ios-system-background: #f2f2f7;
+      --ios-secondary-background: #ffffff;
+      --ios-label: #000000;
+      --ios-secondary-label: #3c3c43;
+      --ios-tertiary-label: #3c3c4399;
+      --ios-separator: #3c3c4349;
+      --ios-blue: #007aff;
+      --ios-gray: #8e8e93;
+      --ios-gray5: #e5e5ea;
+      --ios-gray6: #f2f2f7;
+
+      /* Spacing */
+      --spacing-md: 16px;
+      --spacing-lg: 20px;
+      --spacing-xl: 24px;
+
+      /* Typography */
+      --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+      --font-size-large-title: 34px;
+      --font-size-title3: 20px;
+      --font-size-body: 17px;
+      --font-size-subhead: 15px;
+      --font-size-footnote: 13px;
+      --font-size-caption1: 12px;
+      --font-size-caption2: 11px;
+
+      /* Border Radius */
+      --radius-sm: 10px;
+      --radius-lg: 16px;
+
+      /* Transitions */
+      --transition-fast: 200ms;
+      --transition-normal: 300ms;
+    }
+
+    /* Dark Mode - Manual Toggle */
+    body.dark-mode {
+      --ios-system-background: #000000;
+      --ios-secondary-background: #1c1c1e;
+      --ios-label: #ffffff;
+      --ios-secondary-label: #ebebf5;
+      --ios-tertiary-label: #ebebf599;
+      --ios-separator: #54545899;
+      --ios-blue: #0a84ff;
+      --ios-gray5: #2c2c2e;
+      --ios-gray6: #1c1c1e;
+    }
+
+    /* Auto Dark Mode based on time */
+    @media (prefers-color-scheme: dark) {
+      body:not(.light-mode) {
+        --ios-system-background: #000000;
+        --ios-secondary-background: #1c1c1e;
+        --ios-label: #ffffff;
+        --ios-secondary-label: #ebebf5;
+        --ios-tertiary-label: #ebebf599;
+        --ios-separator: #54545899;
+        --ios-blue: #0a84ff;
+        --ios-gray5: #2c2c2e;
+        --ios-gray6: #1c1c1e;
+      }
+    }
+
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--ios-system-background);
+      color: var(--ios-label);
+      font-size: var(--font-size-body);
+      line-height: 1.47;
+      transition: background var(--transition-normal) ease, color var(--transition-normal) ease;
+    }
+
+    /* App Container */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 428px;
+      margin: 0 auto;
+      padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 0.5px solid var(--ios-separator);
+      padding: 8px var(--spacing-md);
+      transition: all var(--transition-normal) ease;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    body.dark-mode .nav-bar {
+      background: rgba(28, 28, 30, 0.8);
+    }
+
+    .nav-bar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      gap: var(--spacing-md);
+    }
+
+    .nav-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+    }
+
+    .nav-title {
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      color: var(--ios-label);
+      margin-bottom: 2px;
+    }
+
+    .date-time-display {
+      font-size: var(--font-size-caption1);
+      color: var(--ios-secondary-label);
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-toggle {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ios-gray5);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--ios-blue);
+      font-size: 20px;
+      cursor: pointer;
+      transition: all var(--transition-fast) ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .theme-toggle:active {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+
+    body.dark-mode .theme-toggle {
+      background: var(--ios-gray5);
+    }
+
+    /* Large Title */
+    .large-title-container {
+      background: var(--ios-system-background);
+      padding: 16px var(--spacing-md) var(--spacing-lg);
+      transition: background var(--transition-normal) ease;
+    }
+
+    .large-title {
+      font-size: var(--font-size-large-title);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--ios-label);
+      background: linear-gradient(135deg, var(--ios-label) 0%, var(--ios-secondary-label) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body.dark-mode .large-title {
+      background: linear-gradient(135deg, #ffffff 0%, #ebebf5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      background: var(--ios-system-background);
+      padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom, 0px));
+      transition: background var(--transition-normal) ease;
+      -webkit-overflow-scrolling: touch;
+      overflow-y: auto;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      padding: var(--spacing-md);
+    }
+
+    .segmented-control {
+      display: flex;
+      background: var(--ios-gray5);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+      transition: background var(--transition-normal) ease;
+    }
+
+    .segment {
+      flex: 1;
+      min-height: 32px;
+      border: none;
+      background: transparent;
+      color: var(--ios-label);
+      font-size: var(--font-size-subhead);
+      font-weight: 400;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition-fast) ease;
+      font-family: var(--font-family);
+    }
+
+    .segment.active {
+      background: var(--ios-secondary-background);
+      font-weight: 600;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.16);
+    }
+
+    .segment:active:not(.active) {
+      opacity: 0.6;
+    }
+
+    /* Systems Section */
+    .systems-section {
+      padding: 0 var(--spacing-md);
+    }
+
+    .section-header {
+      font-size: var(--font-size-title3);
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      color: var(--ios-label);
+      margin-bottom: var(--spacing-md);
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-header::before {
+      content: '';
+      width: 3px;
+      height: 20px;
+      background: var(--ios-blue);
+      border-radius: 2px;
+    }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-md);
+    }
+
+    /* System Card */
+    .system-card {
+      background: var(--ios-secondary-background);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      cursor: pointer;
+      transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+      border: 0.5px solid var(--ios-separator);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .system-card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .system-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ios-gray6);
+      opacity: 0;
+      transition: opacity var(--transition-fast) ease;
+    }
+
+    .system-card:active::before {
+      opacity: 1;
+    }
+
+    .system-card:active {
+      transform: scale(0.96);
+    }
+
+    .system-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .system-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .system-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-md);
+      position: relative;
+      z-index: 1;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .system-icon i {
+      font-size: 28px;
+      color: #ffffff;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    }
+
+    .system-card:active .system-icon {
+      transform: scale(0.95);
+    }
+
+    body.dark-mode .system-icon {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .system-title {
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      color: var(--ios-label);
+      text-align: center;
+      letter-spacing: -0.3px;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 4px;
+    }
+
+    .system-subtitle {
+      font-size: var(--font-size-footnote);
+      color: var(--ios-secondary-label);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .system-card {
+      animation: fadeIn var(--transition-normal) ease backwards;
+    }
+
+    .system-card:nth-child(1) {
+      animation-delay: 0ms;
+    }
+
+    .system-card:nth-child(2) {
+      animation-delay: 50ms;
+    }
+
+    .system-card:nth-child(3) {
+      animation-delay: 100ms;
+    }
+
+    .system-card:nth-child(4) {
+      animation-delay: 150ms;
+    }
+
+    /* Loading State */
+    .system-card.loading {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 375px) {
+      .large-title {
+        font-size: 30px;
+      }
+
+      .systems-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-icon {
+        width: 56px;
+        height: 56px;
+      }
+
+      .system-icon i {
+        font-size: 24px;
+      }
+    }
+
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Selection */
+    ::selection {
+      background: var(--ios-blue);
+      color: #ffffff;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <div class="nav-bar-content">
+        <div class="nav-left">
+          <div class="nav-title" id="nav-title">الأنظمة</div>
+          <div class="date-time-display" id="date-time"></div>
+        </div>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <i class="bi bi-moon-fill"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="content">
+      <!-- Large Title -->
+      <div class="large-title-container">
+        <h1 class="large-title" id="page-title">أنظمة جنات</h1>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <div class="segmented-control" role="tablist" aria-label="Language selection">
+          <button class="segment active" role="tab" aria-selected="true" onclick="setLang('ar')">العربية</button>
+          <button class="segment" role="tab" aria-selected="false" onclick="setLang('en')">English</button>
+          <button class="segment" role="tab" aria-selected="false" onclick="setLang('fr')">Français</button>
+        </div>
+      </div>
+
+      <!-- Systems Section -->
+      <div class="systems-section">
+        <h2 class="section-header" id="section-title">الأنظمة المتاحة</h2>
+        <div class="systems-grid">
+          <!-- System 1: Management -->
+          <div class="system-card" onclick="openLink('https://manger.jannatagence.com')" role="button" tabindex="0"
+            aria-label="Management System">
+            <div class="system-icon" style="background: linear-gradient(135deg, #007aff 0%, #0051d5 100%);">
+              <i class="bi bi-speedometer2"></i>
+            </div>
+            <div class="system-title" id="sys1">نظام الإدارة</div>
+            <div class="system-subtitle">Management</div>
+          </div>
+
+          <!-- System 2: Clients -->
+          <div class="system-card" onclick="openLink('https://clint.jannatagence.com')" role="button" tabindex="0"
+            aria-label="Clients System">
+            <div class="system-icon" style="background: linear-gradient(135deg, #34c759 0%, #28a745 100%);">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="system-title" id="sys2">نظام العملاء</div>
+            <div class="system-subtitle">Clients</div>
+          </div>
+
+          <!-- System 3: Receipts -->
+          <div class="system-card" onclick="openLink('https://print.jannatagence.com')" role="button" tabindex="0"
+            aria-label="Receipts System">
+            <div class="system-icon" style="background: linear-gradient(135deg, #ff9500 0%, #ff6b00 100%);">
+              <i class="bi bi-receipt-cutoff"></i>
+            </div>
+            <div class="system-title" id="sys3">الإيصالات</div>
+            <div class="system-subtitle">Receipts</div>
+          </div>
+
+          <!-- System 4: Website -->
+          <div class="system-card" onclick="openLink('https://jannatagence.com')" role="button" tabindex="0"
+            aria-label="Website">
+            <div class="system-icon" style="background: linear-gradient(135deg, #af52de 0%, #8e44ad 100%);">
+              <i class="bi bi-globe"></i>
+            </div>
+            <div class="system-title" id="sys4">الموقع الإلكتروني</div>
+            <div class="system-subtitle">Website</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Language texts
+    const texts = {
+      ar: {
+        navTitle: "الأنظمة",
+        pageTitle: "أنظمة جنات",
+        sectionTitle: "الأنظمة المتاحة",
+        sys1: "نظام الإدارة",
+        sys2: "نظام العملاء",
+        sys3: "الإيصالات",
+        sys4: "الموقع الالكتروني",
+        dir: "rtl",
+        lang: "ar"
+      },
+      en: {
+        navTitle: "Systems",
+        pageTitle: "Jannat Systems",
+        sectionTitle: "Available Systems",
+        sys1: "Management",
+        sys2: "Clients",
+        sys3: "Receipts",
+        sys4: "site",
+        dir: "ltr",
+        lang: "en"
+      },
+      fr: {
+        navTitle: "Systèmes",
+        pageTitle: "Systèmes Jannat",
+        sectionTitle: "Systèmes disponibles",
+        sys1: "Gestion",
+        sys2: "Clients",
+        sys3: "Reçus",
+        sys4: "site",
+        dir: "ltr",
+        lang: "fr"
+      }
+    };
+
+    // Set language
+    function setLang(lang) {
+      const t = texts[lang];
+
+      document.getElementById("nav-title").textContent = t.navTitle;
+      document.getElementById("page-title").textContent = t.pageTitle;
+      document.getElementById("section-title").textContent = t.sectionTitle;
+      document.getElementById("sys1").textContent = t.sys1;
+      document.getElementById("sys2").textContent = t.sys2;
+      document.getElementById("sys3").textContent = t.sys3;
+      document.getElementById("sys4").textContent = t.sys4;
+
+      document.documentElement.dir = t.dir;
+      document.documentElement.lang = t.lang;
+
+      const segments = document.querySelectorAll('.segment');
+      segments.forEach(segment => {
+        segment.classList.remove('active');
+        segment.setAttribute('aria-selected', 'false');
+      });
+
+      const langMap = { ar: 0, en: 1, fr: 2 };
+      const activeSegment = segments[langMap[lang]];
+      if (activeSegment) {
+        activeSegment.classList.add('active');
+        activeSegment.setAttribute('aria-selected', 'true');
+      }
+    }
+
+    // Open link with better feedback
+    function openLink(url) {
+      const card = event.currentTarget;
+      card.classList.add('loading');
+      
+      // Haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(20);
+      }
+      
+      setTimeout(() => {
+        window.open(url, '_blank');
+        setTimeout(() => {
+          card.classList.remove('loading');
+        }, 300);
+      }, 150);
+    }
+
+    // Dark mode toggle with smooth transition
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+    // Check saved theme or system preference
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-mode');
+        themeIcon.className = 'bi bi-sun-fill';
+        if (metaThemeColor) metaThemeColor.content = '#000000';
+      } else {
+        document.body.classList.remove('dark-mode');
+        themeIcon.className = 'bi bi-moon-fill';
+        if (metaThemeColor) metaThemeColor.content = '#f2f2f7';
+      }
+    }
+
+    initTheme();
+
+    themeToggle.addEventListener('click', function () {
+      const isDark = document.body.classList.contains('dark-mode');
+      
+      // Smooth transition
+      document.body.style.transition = 'background 0.3s ease, color 0.3s ease';
+      
+      if (isDark) {
+        document.body.classList.remove('dark-mode');
+        themeIcon.className = 'bi bi-moon-fill';
+        localStorage.setItem('theme', 'light');
+        if (metaThemeColor) metaThemeColor.content = '#f2f2f7';
+      } else {
+        document.body.classList.add('dark-mode');
+        themeIcon.className = 'bi bi-sun-fill';
+        localStorage.setItem('theme', 'dark');
+        if (metaThemeColor) metaThemeColor.content = '#000000';
+      }
+
+      // Haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+
+    // Listen to system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        if (e.matches) {
+          document.body.classList.add('dark-mode');
+          themeIcon.className = 'bi bi-sun-fill';
+          if (metaThemeColor) metaThemeColor.content = '#000000';
+        } else {
+          document.body.classList.remove('dark-mode');
+          themeIcon.className = 'bi bi-moon-fill';
+          if (metaThemeColor) metaThemeColor.content = '#f2f2f7';
+        }
+      }
+    });
+
+    // Keyboard navigation
+    const systemCards = document.querySelectorAll('.system-card');
+    systemCards.forEach(card => {
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+
+    // Prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+
+    // Date and Time Display
+    function updateDateTime() {
+      const now = new Date();
+      const options = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      };
+      
+      const dateTimeStr = now.toLocaleString('en-US', options);
+      const dateTimeElement = document.getElementById('date-time');
+      if (dateTimeElement) {
+        dateTimeElement.textContent = dateTimeStr;
+      }
+    }
+
+    // Update time every minute
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered:', registration);
+          })
+          .catch((error) => {
+            console.log('Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    // Initialize
+    setLang('ar');
+  </script>
+</body>
+
+</html>
